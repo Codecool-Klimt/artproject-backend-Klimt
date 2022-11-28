@@ -18,7 +18,7 @@ public class ImageJdbcRepository implements ImageRepository {
 
     @Override
     public boolean checkOwner(String owner, String id) {
-        //TODO
+        //TODO owner = email, id = image id
         throw new RuntimeException("Not yet implemented!");
     }
 
