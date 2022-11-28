@@ -17,31 +17,38 @@ public class ImageService {
     @Qualifier("jdbc")
     private ImageRepository imageRepository;
 
-    public List<ImageDataDTO> getAll(String user){
+    public List<ImageDataDTO> getAll(String user) {
         //get owned by user.
         //help: imgurl = System.getenv("url") + "/api/artwork/" + id + "." +image.getExtension();
-
+        //TODO
+        throw new RuntimeException("Not yet implemented!");
     }
 
-    public boolean checkOwner(String owner, String id){
-
-
+    public boolean checkOwner(String owner, String id) {
+        //TODO
+        throw new RuntimeException("Not yet implemented!");
     }
 
     public void delete(String id, String owner) {
-
-
-    }
-
-    public void updateCategory(String id ,ImageUpdateDTO imageUpdateDTO, String owner) {
+        //TODO
+        throw new RuntimeException("Not yet implemented!");
 
     }
 
-    public byte[] getImageFile(String filename) { //help: filename is for example 41d6608d-0803-4239-9235-09f902fbf705.jpg
+    public void updateCategory(String id, ImageUpdateDTO imageUpdateDTO, String owner) {
+        //TODO
+        throw new RuntimeException("Not yet implemented!");
+    }
 
+    public byte[] getImageFile(String filename) {
+        //help: filename is for example 41d6608d-0803-4239-9235-09f902fbf705.jpg
+        //TODO
+        throw new RuntimeException("Not yet implemented!");
     }
 
     public String storeFile(MultipartFile file, String title, String description, String owner) {
         //help: filename is for example 41d6608d-0803-4239-9235-09f902fbf705.jpg
+        //TODO
+        throw new RuntimeException("Not yet implemented!");
     }
 }

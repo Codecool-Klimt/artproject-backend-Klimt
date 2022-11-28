@@ -37,7 +37,8 @@ public class UserService implements UserDetailsService {
     }
 
     public List<UserDTO> getAll(){
-
+        //TODO
+        throw new RuntimeException("Not yet implemented!");
     }
 
     @Override
