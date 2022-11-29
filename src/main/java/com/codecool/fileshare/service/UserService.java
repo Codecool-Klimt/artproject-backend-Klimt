@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -35,21 +36,20 @@ public class UserService implements UserDetailsService {
         userRepository.save(appUser);
     }
 
-    public List<UserDTO> getAll(){
-        //TODO
-        throw new RuntimeException("Not yet implemented!");
+    public List<UserDTO> getAll() {
+        return userRepository.getAppUsers().stream().map(user -> new UserDTO(user.getEmail())).collect(Collectors.toList());
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         AppUser appUser = userRepository.findByEmail(email);
-        if(appUser == null){
+        if (appUser == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         appUser.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         });
-        return new User(appUser.getEmail(),appUser.getPassword(),authorities);
+        return new User(appUser.getEmail(), appUser.getPassword(), authorities);
     }
 }
