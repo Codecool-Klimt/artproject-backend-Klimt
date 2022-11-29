@@ -12,8 +12,8 @@ public class ImageJdbcRepository implements ImageRepository {
 
     @Override
     public String storeImageFile(String title, String description, String owner, byte[] content, String extension) {
-//       try(Connection conn = DriverManager.getConnection())
-           return null;
+        //TODO return generated id
+        throw new RuntimeException("Not yet implemented!");
     }
 
     @Override
