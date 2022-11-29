@@ -41,14 +41,14 @@ public class ImageService {
 
     public byte[] getImageFile(String filename) {
         //help: filename is for example 41d6608d-0803-4239-9235-09f902fbf705.jpg
-        String id = filename.split(".")[0];
+        String id = filename.split("\\.")[0];
         return imageRepository.getImageFile(id);
     }
 
     public String storeFile(MultipartFile file, String title, String description, String owner) {
         //help: filename is for example 41d6608d-0803-4239-9235-09f902fbf705.jpg
         try {
-            String extension = file.getOriginalFilename().split(".")[1];
+            String extension = file.getOriginalFilename().split("\\.")[1];
             String imageId = imageRepository.storeImageFile(title, description, owner, file.getBytes(), extension);
             return imageId + "." + extension;
         } catch (IOException|NullPointerException e) {
