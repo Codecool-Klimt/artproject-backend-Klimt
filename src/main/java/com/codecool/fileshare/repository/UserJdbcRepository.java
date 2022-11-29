@@ -46,7 +46,19 @@ public class UserJdbcRepository implements UserRepository {
 
     @Override
     public List<AppUser> getAppUsers() {
-        //TODO
-        throw new RuntimeException("Not yet implemented!");
+        final String SQL = "SELECT email, password FROM app_user;";
+        List<AppUser> appUsers = new ArrayList<>();
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            PreparedStatement st = con.prepareStatement(SQL);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                //ATTENTION password is encrypted here, how do we need it?
+                var appUser = new AppUser(rs.getString(1), rs.getString(2));
+                appUsers.add(appUser);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return appUsers;
     }
 }
