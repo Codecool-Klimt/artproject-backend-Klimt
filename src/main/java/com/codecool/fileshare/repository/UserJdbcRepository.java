@@ -11,7 +11,7 @@ import java.util.List;
 import static com.codecool.fileshare.repository.DbConstants.*;
 
 @Repository
-public class UserJdbcRepository implements UserRepository{
+public class UserJdbcRepository implements UserRepository {
 
 
     @Override
@@ -22,7 +22,7 @@ public class UserJdbcRepository implements UserRepository{
             PreparedStatement st = con.prepareStatement(SQL);
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 //ATTENTION password is encrypted here, how do we need it?
                 appUser = new AppUser(email, rs.getString(2));
             }
@@ -39,9 +39,8 @@ public class UserJdbcRepository implements UserRepository{
             PreparedStatement st = con.prepareStatement(SQL);
             st.setString(1, appUser.getEmail());
             st.setString(2, appUser.getPassword());
-            ResultSet rs = st.executeQuery();
         } catch (SQLException e) {
-            throw new UserAlreadyExistsException();
+            throw new UserAlreadyExistsException("Email " + appUser.getEmail() + " is already in use!", e);
         }
     }
 
