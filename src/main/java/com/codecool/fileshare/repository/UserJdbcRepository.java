@@ -38,6 +38,7 @@ public class UserJdbcRepository implements UserRepository {
             PreparedStatement st = con.prepareStatement(SQL);
             st.setString(1, appUser.getEmail());
             st.setString(2, appUser.getPassword());
+            st.executeUpdate();
         } catch (SQLException e) {
             throw new UserAlreadyExistsException("Email " + appUser.getEmail() + " is already in use!", e);
         }
