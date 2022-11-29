@@ -23,6 +23,8 @@ public class UserController {
         try {
             userService.saveUser(appUser);
         }catch (UserAlreadyExistsException e){
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause().getMessage());
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(HttpStatus.OK);
