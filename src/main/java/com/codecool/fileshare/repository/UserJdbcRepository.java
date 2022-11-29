@@ -23,7 +23,6 @@ public class UserJdbcRepository implements UserRepository {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                //ATTENTION password is encrypted here, how do we need it?
                 appUser = new AppUser(email, rs.getString(2));
             }
         } catch (SQLException e) {
@@ -52,7 +51,6 @@ public class UserJdbcRepository implements UserRepository {
             PreparedStatement st = con.prepareStatement(SQL);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                //ATTENTION password is encrypted here, how do we need it?
                 var appUser = new AppUser(rs.getString(1), rs.getString(2));
                 appUsers.add(appUser);
             }
