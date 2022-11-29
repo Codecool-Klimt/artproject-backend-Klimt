@@ -42,10 +42,10 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        AppUser appUser = userRepository.findByUsername(email);
         if(appUser == null){
-            throw new UsernameNotFoundException("User not found with name: " + username);
+            throw new UsernameNotFoundException("User not found with email: " + email);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         appUser.getRoles().forEach(role -> {
