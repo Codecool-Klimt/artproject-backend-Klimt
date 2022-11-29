@@ -6,7 +6,7 @@ import com.codecool.fileshare.model.AppUser;
 import java.util.List;
 
 public interface UserRepository {
-    AppUser findByUsername(String username);
+    AppUser findByEmail(String username);
     void save(AppUser appUser) throws UserAlreadyExistsException;
 
     List<AppUser> getAppUsers();

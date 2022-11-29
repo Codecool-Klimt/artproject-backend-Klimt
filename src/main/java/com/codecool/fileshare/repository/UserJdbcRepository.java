@@ -15,7 +15,7 @@ public class UserJdbcRepository implements UserRepository {
 
 
     @Override
-    public AppUser findByUsername(String email) {
+    public AppUser findByEmail(String email) {
         final String SQL = "SELECT email, password FROM app_user WHERE email = ?;";
         AppUser appUser = null;
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
