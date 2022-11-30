@@ -16,7 +16,7 @@ public class ImageJdbcRepository implements ImageRepository {
     @Override
     public String storeImageFile(String title, String description, String owner, byte[] content, String extension) {
         //TODO return generated id
-        final String SQL = "INSERT INTO image(title, description, owner, content, extension) VALUES(?, ?, ?, ?, ?)";
+        final String SQL = "INSERT INTO image(title, description, \"owner\", content, extension) VALUES(?, ?, ?, ?, ?)";
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             PreparedStatement st = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, title);
@@ -39,12 +39,12 @@ public class ImageJdbcRepository implements ImageRepository {
     public boolean checkOwner(String owner, String id) {
         //TODO owner = email, id = image id
         final String SQL = "SELECT CASE WHEN EXISTS (\n" +
-                "    SELECT id, owner\n" +
+                "    SELECT id, \"owner\"\n" +
                 "    FROM image\n" +
-                "    WHERE owner = ? AND id = ?\n" +
+                "    WHERE \"owner\" = ? AND id::text = ?\n" +
                 ")\n" +
                 "THEN CAST(1 AS BIT)\n" +
-                "ELSE CAST(0 AS BIT) END\n";
+                "ELSE CAST(0 AS BIT) END;";
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             PreparedStatement st = con.prepareStatement(SQL);
             st.setString(1, owner);
@@ -61,7 +61,7 @@ public class ImageJdbcRepository implements ImageRepository {
 
     @Override
     public List<Image> getAll(String owner) {
-        final String SQL = "SELECT id, title, description, content, extension FROM image WHERE owner = ?";
+        final String SQL = "SELECT id, title, description, content, extension FROM image WHERE \"owner\" = ?";
         List<Image> images = new ArrayList<>();
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             PreparedStatement st = con.prepareStatement(SQL);
@@ -86,7 +86,7 @@ public class ImageJdbcRepository implements ImageRepository {
 
     @Override
     public void delete(String uuid, String owner) {
-        final String SQL = "DELETE FROM image WHERE owner = ? AND id = ?";
+        final String SQL = "DELETE FROM image WHERE \"owner\" = ? AND id::text = ?";
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             PreparedStatement st = con.prepareStatement(SQL);
             st.setString(1, owner);
@@ -99,7 +99,7 @@ public class ImageJdbcRepository implements ImageRepository {
 
     @Override
     public void updateImage(String id, String title, String description, String owner) {
-        final String SQL = "UPDATE image SET title = ?, description = ? WHERE id = ? AND owner = ?";
+        final String SQL = "UPDATE image SET title = ?, description = ? WHERE id::text = ? AND \"owner\" = ?";
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             PreparedStatement st = con.prepareStatement(SQL);
             st.setString(1, title);
@@ -114,7 +114,7 @@ public class ImageJdbcRepository implements ImageRepository {
 
     @Override
     public byte[] getImageFile(String id) {
-        final String SQL = "SELECT content FROM image WHERE id = ?";
+        final String SQL = "SELECT content FROM image WHERE id::text = ?";
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             PreparedStatement st = con.prepareStatement(SQL);
             st.setString(1, id);
