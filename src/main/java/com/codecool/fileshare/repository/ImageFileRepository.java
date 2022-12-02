@@ -33,7 +33,7 @@ public class ImageFileRepository implements ImageRepository {
     }
 
     @Override
-    public void updateImage(String id, String title, String description, String owner) {
+    public void updateImage(String id, String title, String description, String tags, String owner) {
         //TODO
         throw new RuntimeException("Not yet implemented!");
     }

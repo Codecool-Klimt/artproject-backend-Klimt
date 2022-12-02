@@ -36,7 +36,7 @@ public class ImageService {
     }
 
     public void updateCategory(String id, ImageUpdateDTO imageUpdateDTO, String owner) {
-        imageRepository.updateImage(id, imageUpdateDTO.getTitle(), imageUpdateDTO.getDescription(), owner);
+        imageRepository.updateImage(id, imageUpdateDTO.getTitle(), imageUpdateDTO.getDescription(), imageUpdateDTO.getTags(), owner);
     }
 
     public byte[] getImageFile(String filename) {
@@ -55,6 +55,6 @@ public class ImageService {
             e.printStackTrace();
         }
 
-        return null; //TODO what if its null? answer: it returns with null.jpg
+        return null; //TODO what if its null? answer:atm it returns with null.jpg
     }
 }

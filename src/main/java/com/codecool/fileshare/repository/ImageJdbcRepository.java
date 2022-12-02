@@ -15,7 +15,6 @@ public class ImageJdbcRepository implements ImageRepository {
 
     @Override
     public String storeImageFile(String title, String description, String owner, byte[] content, String extension, String tags) {
-        //TODO return generated id
         if (tags == null || tags.isEmpty() || tags.equalsIgnoreCase("null")) tags = null;
         final String SQL = "INSERT INTO image(title, description, \"owner\", content, extension, tags) VALUES(?, ?, ?, ?, ?, ?)";
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
@@ -38,7 +37,6 @@ public class ImageJdbcRepository implements ImageRepository {
 
     @Override
     public boolean checkOwner(String owner, String id) {
-        //TODO owner = email, id = image id
         final String SQL = "SELECT CASE WHEN EXISTS (\n" +
                 "    SELECT id, \"owner\"\n" +
                 "    FROM image\n" +
@@ -99,14 +97,16 @@ public class ImageJdbcRepository implements ImageRepository {
     }
 
     @Override
-    public void updateImage(String id, String title, String description, String owner) {
-        final String SQL = "UPDATE image SET title = ?, description = ? WHERE id::text = ? AND \"owner\" = ?";
+    public void updateImage(String id, String title, String description, String tags, String owner) {
+        if (tags == null || tags.isEmpty() || tags.equalsIgnoreCase("null")) tags = null;
+        final String SQL = "UPDATE image SET title = ?, description = ?, tags = ? WHERE id::text = ? AND \"owner\" = ?";
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             PreparedStatement st = con.prepareStatement(SQL);
             st.setString(1, title);
             st.setString(2, description);
-            st.setString(3, id);
-            st.setString(4, owner);
+            st.setString(3, tags);
+            st.setString(4, id);
+            st.setString(5, owner);
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
