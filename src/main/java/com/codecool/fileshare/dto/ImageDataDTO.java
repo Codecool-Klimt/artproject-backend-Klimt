@@ -12,5 +12,6 @@ public class ImageDataDTO {
     private String title;
     private String description;
     private String url;
+    private String tags;
 
 }

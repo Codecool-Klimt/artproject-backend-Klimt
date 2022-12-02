@@ -14,4 +14,5 @@ public class Image {
     private String owner;
     private byte[] content;
     private String extension;
+    private String tags;
 }

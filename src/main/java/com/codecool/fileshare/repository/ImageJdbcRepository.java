@@ -60,7 +60,7 @@ public class ImageJdbcRepository implements ImageRepository {
 
     @Override
     public List<Image> getAll(String owner) {
-        final String SQL = "SELECT id, title, description, content, extension FROM image WHERE \"owner\" = ?";
+        final String SQL = "SELECT id, title, description, content, extension, tags FROM image WHERE \"owner\" = ?";
         List<Image> images = new ArrayList<>();
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             PreparedStatement st = con.prepareStatement(SQL);
@@ -73,7 +73,8 @@ public class ImageJdbcRepository implements ImageRepository {
                 String description = rs.getString(3);
                 byte[] content = rs.getBytes(4);
                 String extension = rs.getString(5);
-                images.add(new Image(id, title, description, owner, content, extension));
+                String tags = rs.getString(6);
+                images.add(new Image(id, title, description, owner, content, extension, tags));
             }
 
             return images;
