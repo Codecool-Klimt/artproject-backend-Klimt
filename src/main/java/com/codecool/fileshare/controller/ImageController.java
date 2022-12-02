@@ -27,13 +27,13 @@ public class ImageController {
     }
 
     @GetMapping
-    public List<ImageDataDTO> getAll(Authentication authentication){
+    public List<ImageDataDTO> getAll(Authentication authentication) {
         return imageService.getAll(authentication.getName());
     }
 
     @DeleteMapping("/{uuid}")
     public ResponseEntity<Void> delete(@PathVariable("uuid") String id, Authentication authentication) {
-        if(!imageService.checkOwner(authentication.getName(),id)){
+        if (!imageService.checkOwner(authentication.getName(), id)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         imageService.delete(id, authentication.getName());
@@ -41,8 +41,8 @@ public class ImageController {
     }
 
     @PatchMapping("/{uuid}")
-    public ResponseEntity<Void> updateCategory(@PathVariable("uuid") String id, @RequestBody ImageUpdateDTO imageUpdateDTO, Authentication authentication){
-        if(!imageService.checkOwner(authentication.getName(),id)){
+    public ResponseEntity<Void> updateCategory(@PathVariable("uuid") String id, @RequestBody ImageUpdateDTO imageUpdateDTO, Authentication authentication) {
+        if (!imageService.checkOwner(authentication.getName(), id)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         imageService.updateCategory(id, imageUpdateDTO, authentication.getName());
@@ -52,9 +52,10 @@ public class ImageController {
     @GetMapping("/{filename}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename, Authentication authentication) {
         String id = filename.split("\\.")[0];
-        if(!imageService.checkOwner(authentication.getName(),id)){
+        if (!imageService.checkOwner(authentication.getName(), id)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        };
+        }
+        ;
         byte[] file = imageService.getImageFile(filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "inline").body(new ByteArrayResource(file));
@@ -66,7 +67,7 @@ public class ImageController {
                                    @RequestParam("description") String description,
                                    @RequestParam("tags") String tags,
                                    Authentication authentication) {
-        return imageService.storeFile(file,title, description, authentication.getName());
+        return imageService.storeFile(file, title, description, tags, authentication.getName());
 
     }
 }

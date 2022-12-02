@@ -45,11 +45,11 @@ public class ImageService {
         return imageRepository.getImageFile(id);
     }
 
-    public String storeFile(MultipartFile file, String title, String description, String owner) {
+    public String storeFile(MultipartFile file, String title, String description, String tags, String owner) {
         //help: filename is for example 41d6608d-0803-4239-9235-09f902fbf705.jpg
         try {
             String extension = file.getOriginalFilename().split("\\.")[1];
-            String imageId = imageRepository.storeImageFile(title, description, owner, file.getBytes(), extension);
+            String imageId = imageRepository.storeImageFile(title, description, owner, file.getBytes(), extension, tags);
             return imageId + "." + extension;
         } catch (IOException|NullPointerException e) {
             e.printStackTrace();

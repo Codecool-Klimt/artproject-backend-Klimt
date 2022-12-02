@@ -9,7 +9,7 @@ import java.util.List;
 @Component("file")
 public class ImageFileRepository implements ImageRepository {
     @Override
-    public String storeImageFile(String title, String description, String owner, byte[] content, String extension) {
+    public String storeImageFile(String title, String description, String owner, byte[] content, String extension, String tags) {
         //TODO
         throw new RuntimeException("Not yet implemented!");
     }

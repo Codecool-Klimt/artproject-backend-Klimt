@@ -14,7 +14,7 @@ import static com.codecool.fileshare.repository.DbConstants.*;
 public class ImageJdbcRepository implements ImageRepository {
 
     @Override
-    public String storeImageFile(String title, String description, String owner, byte[] content, String extension) {
+    public String storeImageFile(String title, String description, String owner, byte[] content, String extension, String tags) {
         //TODO return generated id
         final String SQL = "INSERT INTO image(title, description, \"owner\", content, extension) VALUES(?, ?, ?, ?, ?)";
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
