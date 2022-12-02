@@ -62,12 +62,14 @@ public class ImageController {
     }
 
     @PostMapping()
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   @RequestParam("title") String title,
-                                   @RequestParam("description") String description,
-                                   @RequestParam("tags") String tags,
-                                   Authentication authentication) {
-        return imageService.storeFile(file, title, description, tags, authentication.getName());
-
+    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
+                                                   @RequestParam("title") String title,
+                                                   @RequestParam("description") String description,
+                                                   @RequestParam("tags") String tags,
+                                                   Authentication authentication) {
+        var result = imageService.storeFile(file, title, description, tags, authentication.getName());
+        if (result == null) return new ResponseEntity<>("File already present in the database, " +
+                    "try with a different title!", HttpStatus.CONFLICT);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
