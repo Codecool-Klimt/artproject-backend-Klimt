@@ -16,7 +16,8 @@ public class ImageJdbcRepository implements ImageRepository {
     @Override
     public String storeImageFile(String title, String description, String owner, byte[] content, String extension, String tags) {
         //TODO return generated id
-        final String SQL = "INSERT INTO image(title, description, \"owner\", content, extension) VALUES(?, ?, ?, ?, ?)";
+        if (tags == null || tags.isEmpty() || tags.equalsIgnoreCase("null")) tags = null;
+        final String SQL = "INSERT INTO image(title, description, \"owner\", content, extension, tags) VALUES(?, ?, ?, ?, ?, ?)";
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             PreparedStatement st = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, title);
@@ -24,10 +25,10 @@ public class ImageJdbcRepository implements ImageRepository {
             st.setString(3, owner);
             st.setBytes(4, content);
             st.setString(5, extension);
+            st.setString(6, tags);
             st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
             rs.next();
-
             return rs.getString(1);
         } catch (SQLException e) {
             e.printStackTrace();

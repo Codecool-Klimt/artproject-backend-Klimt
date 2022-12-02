@@ -55,6 +55,6 @@ public class ImageService {
             e.printStackTrace();
         }
 
-        return null; //TODO what if its null?
+        return null; //TODO what if its null? answer: it returns with null.jpg
     }
 }
