@@ -50,8 +50,10 @@ public class ImageService {
         try {
             String extension = file.getOriginalFilename().split("\\.")[1];
             String imageId = imageRepository.storeImageFile(title, description, owner, file.getBytes(), extension);
+            if (imageId == null)
+                return null;
             return imageId + "." + extension;
-        } catch (IOException|NullPointerException e) {
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
 
