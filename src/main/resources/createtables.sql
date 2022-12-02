@@ -15,5 +15,6 @@ CREATE TABLE if NOT EXISTS image (
     description VARCHAR(250),
     "content" bytea NOT NULL,
     extension VARCHAR(4) NOT NULL,
+    tags VARCHAR(250) NULL,
     CONSTRAINT "fk_image_app_user" FOREIGN KEY ("owner") REFERENCES app_user(email)
 );
