@@ -49,14 +49,10 @@ public class ImageService {
         //help: filename is for example 41d6608d-0803-4239-9235-09f902fbf705.jpg
         try {
             String extension = file.getOriginalFilename().split("\\.")[1];
-            String imageId = imageRepository.storeImageFile(title, description, owner, file.getBytes(), extension, tags);
-            if (imageId == null)
-                return null;
-            return imageId + "." + extension;
+            return imageRepository.storeImageFile(title, description, owner, file.getBytes(), extension, tags);
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
-
-        return null; //TODO what if its null? answer:atm it returns with null.jpg
+        return null;
     }
 }

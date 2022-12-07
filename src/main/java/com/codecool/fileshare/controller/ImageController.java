@@ -56,7 +56,7 @@ public class ImageController {
         if (!imageService.checkOwner(authentication.getName(), id)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        ;
+
         byte[] file = imageService.getImageFile(filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "inline").body(new ByteArrayResource(file));
