@@ -23,7 +23,7 @@ public class ImageService {
     public List<ImageDataDTO> getAll(String user) {
         return imageRepository.getAll(user).stream()
                 .map(i -> new ImageDataDTO(i.getId(), i.getTitle(), i.getDescription(),
-                        System.getenv("url") + "/api/artwork/" + i.getId() + "." + i.getExtension(), i.getTags()))
+                        System.getenv("url") + "/api/artwork/" + i.getId(), i.getExtension(), i.getTags()))
                 .collect(Collectors.toList());
     }
 
