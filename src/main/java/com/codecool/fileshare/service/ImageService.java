@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,7 @@ public class ImageService {
     public byte[] getImageFile(String filename) {
         //help: filename is for example 41d6608d-0803-4239-9235-09f902fbf705.jpg
         String id = filename.split("\\.")[0];
-        return imageRepository.getImageFile(id);
+        return Base64.getEncoder().encode(imageRepository.getImageFile(id));
     }
 
     public String storeFile(MultipartFile file, String title, String description, String tags, String owner) {
