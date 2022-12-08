@@ -1,6 +1,5 @@
 package com.codecool.fileshare.repository;
 
-import com.codecool.fileshare.model.AppUser;
 import com.codecool.fileshare.model.Image;
 import org.springframework.stereotype.Component;
 

@@ -2,7 +2,6 @@ package com.codecool.fileshare.service;
 
 import com.codecool.fileshare.dto.ImageDataDTO;
 import com.codecool.fileshare.dto.ImageUpdateDTO;
-import com.codecool.fileshare.model.Image;
 import com.codecool.fileshare.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,13 +40,11 @@ public class ImageService {
     }
 
     public byte[] getImageFile(String filename) {
-        //help: filename is for example 41d6608d-0803-4239-9235-09f902fbf705.jpg
         String id = filename.split("\\.")[0];
         return Base64.getEncoder().encode(imageRepository.getImageFile(id));
     }
 
     public String storeFile(MultipartFile file, String title, String description, String tags, String owner) {
-        //help: filename is for example 41d6608d-0803-4239-9235-09f902fbf705.jpg
         try {
             String extension = file.getOriginalFilename().split("\\.")[1];
             return imageRepository.storeImageFile(title, description, owner, file.getBytes(), extension, tags);
